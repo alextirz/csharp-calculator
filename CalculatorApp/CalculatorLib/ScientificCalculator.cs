@@ -4,6 +4,8 @@ namespace CalculatorLib
 {
     public class ScientificCalculator : Calculator
     {
+        private readonly string[] SpecificOperations = { "Pow", "Sqrt", "Sin", "Cos" };
+        protected override string[] ValidOperations => base.ValidOperations.Concat(SpecificOperations).ToArray();
         public double Pow(double a, double b) => LastResult = Math.Pow(a, b);
 
         public double Sqrt(double a)

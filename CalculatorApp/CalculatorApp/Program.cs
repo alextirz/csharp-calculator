@@ -7,16 +7,14 @@ namespace CalculatorApp
         static void Main()
         {
 
-            Console.WriteLine("Simple Calculator.");
+            Console.WriteLine("Super Calculator.");
+            Calculator calculator = SelectCalculator();
+            if (calculator == null) return; // user choice is to quit
 
             while (true)
             {
-                Console.WriteLine("Choose operation (+, -, *, /) or 'q' to quit:");
+                Console.WriteLine($"Choose operation. {calculator.ShowValidOperations()}");
                 var operation = SelectOperation();
-                if (operation == "q")
-                    return;
-
-                var calculator = new Calculator();
 
                 Console.WriteLine("Please enter first number:");
                 double a = ReadNumberInput();
@@ -26,6 +24,45 @@ namespace CalculatorApp
 
                 PerformOperation(calculator, a, b, operation);
                 Console.WriteLine($"(LastResult stored: {calculator.LastResult})");
+            }
+        }
+
+        static Calculator? SelectCalculator()
+        {
+            while (true)
+            {
+                Console.WriteLine("Select calculator type:");
+                Console.WriteLine("1 - Basic Calculator");
+                Console.WriteLine("2 - Scientific Calculator");
+                Console.WriteLine("3 - Programmer Calculator");
+                Console.WriteLine("q - Quit");
+
+                var choice = Console.ReadLine()?.Trim().ToLower();
+
+                if (choice == "q")
+                {
+                    Console.WriteLine("Quitting.");
+                    return null;
+                }
+                if (choice == "1")
+                {
+                    Console.WriteLine("Selected Basic Calculator");
+                    return new Calculator();
+                }
+
+                if (choice == "2")
+                {
+                    Console.WriteLine("Selected Scientific Calculator");
+                    return new ScientificCalculator();
+                }
+
+                if (choice == "3")
+                {
+                    Console.WriteLine("Selected Programmer Calculator");
+                    return new ProgrammerCalculator();
+                }
+
+                Console.WriteLine("Invalid choice. Please follow the rules below.");
             }
         }
 

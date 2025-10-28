@@ -2,6 +2,7 @@
 {
     public class Calculator
     {
+        protected virtual string[] ValidOperations { get; } = ["+", "-", "*", "/"];
         public double LastResult { get; protected set; }
         public double Add(double a, double b) => LastResult = a + b;
         public double Subtract(double a, double b) => LastResult = a - b;
@@ -15,6 +16,11 @@
             }
 
             return LastResult = a / b;
+        }
+
+        public string ShowValidOperations()
+        {
+            return $"Available operations: {string.Join(", ", ValidOperations)}";
         }
     }
 }

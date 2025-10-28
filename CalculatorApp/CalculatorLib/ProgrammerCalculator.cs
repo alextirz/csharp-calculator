@@ -4,6 +4,8 @@ namespace CalculatorLib
 {
     public class ProgrammerCalculator : Calculator
     {
+        private readonly string[] SpecificOperations = { "bin", "hex", "&", "|", "^" };
+        protected override string[] ValidOperations => base.ValidOperations.Concat(SpecificOperations).ToArray();
         public string ToBinary(int number) => Convert.ToString(number, 2);
         public string ToHex(int number) => Convert.ToString(number, 16).ToUpper();
 
