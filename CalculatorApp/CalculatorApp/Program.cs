@@ -4,33 +4,40 @@ namespace CalculatorApp
 {
     class Program
     {
-        static bool exit = false;
         static void Main()
         {
 
-            Console.WriteLine("=== Simple Calculator ===");
+            Console.WriteLine("Simple Calculator.");
 
-            while (!exit)
+            while (true)
             {
+                Console.WriteLine("Choose operation (+, -, *, /) or 'q' to quit:");
+                var operation = SelectOperation();
+                if (operation == "q")
+                    return;
+
                 Console.WriteLine("Please enter first number:");
                 double a = ReadNumberInput();
 
                 Console.WriteLine("Please enter second number:");
                 double b = ReadNumberInput();
 
-                Console.WriteLine("Choose operation (+, -, *, /) or 'q' to quit:");
-                PerformOperation(a, b);
+                PerformOperation(a, b, operation);
                 Console.WriteLine($"(LastResult stored: {Calculator.LastResult})");
             }
         }
 
-        private static bool CheckQuit(string? input)
-        {  // Quit
-            if (input?.ToLower() == "q")
+        private static string SelectOperation()
+        {
+            while (true)
             {
-                exit = true;
+                var input = Console.ReadLine().Trim().ToLower();
+
+                if (input == "q" || input == "+" || input == "+" || input == "+" || input == "+")
+                    return input;
+
+                Console.WriteLine("Error: Invalid input. Please enter a valid operation (+, -, *, /) or 'q' to quit.");
             }
-            return exit;
         }
 
         private static double ReadNumberInput()
@@ -46,19 +53,13 @@ namespace CalculatorApp
             }
         }
 
-        private static void PerformOperation(double a, double b)
+        private static void PerformOperation(double a, double b, string operation)
         {
             while (true)
             {
-                var input = Console.ReadLine()?.Trim();
-
-                // Quit
-                if (CheckQuit(input))
-                    break;
-
                 try
                 {
-                    Console.WriteLine($"Result: {input switch
+                    Console.WriteLine($"Result: {operation switch
                     {
                         "+" => Calculator.Add(a, b),
                         "-" => Calculator.Subtract(a, b),
@@ -71,7 +72,7 @@ namespace CalculatorApp
                 }
                 catch
                 {
-                    Console.WriteLine("Error: Invalid input. Please enter a valid operation (+, -, *, /) or 'q' to quit.");
+                    Console.WriteLine("Error: Invalid operation.");
                 }
             }
         }
