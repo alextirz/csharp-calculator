@@ -52,3 +52,42 @@ CodeCoverage/
 *.VisualState.xml
 TestResult.xml
 nunit-*.xml
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Visual Studio 2022+
+.vs/
+
+# Generated files
+GeneratedFiles/
+*.generated.cs
+
+# Backup & report files
+*_i.c
+*_p.c
+*_h.h
+*.ilk
+*.meta
+*.obj
+*.pch
+*.pdb
+*.tmp
+*.tmp_proj
+*.log
+*.vspscc
+*.vssscc
+*.ncb
+*.opendb
+*.sdf
+*.cachefile
+
+# Publish & package output
+*.Publish.xml
+publish/
+*.azurePubxml
+*.publishproj
