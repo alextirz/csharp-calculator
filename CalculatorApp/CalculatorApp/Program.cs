@@ -4,11 +4,13 @@ namespace CalculatorApp
 {
     class Program
     {
+        static bool exit = false;
         static void Main()
         {
+
             Console.WriteLine("=== Simple Calculator ===");
 
-            while (true)
+            while (!exit)
             {
                 Console.WriteLine("Please enter first number:");
                 double a = ReadNumberInput();
@@ -22,11 +24,20 @@ namespace CalculatorApp
             }
         }
 
+        private static bool CheckQuit(string? input)
+        {  // Quit
+            if (input?.ToLower() == "q")
+            {
+                exit = true;
+            }
+            return exit;
+        }
+
         private static double ReadNumberInput()
         {
             while (true)
             {
-                var input = Console.ReadLine();
+                var input = Console.ReadLine()?.Trim();
 
                 if (double.TryParse(input, out double number))
                     return number;
@@ -39,21 +50,21 @@ namespace CalculatorApp
         {
             while (true)
             {
-                var op = Console.ReadLine()?.Trim();
+                var input = Console.ReadLine()?.Trim();
 
                 // Quit
-                if (op?.ToLower() == "q")
+                if (CheckQuit(input))
                     break;
 
                 try
                 {
-                    Console.WriteLine($"Result: {op switch
+                    Console.WriteLine($"Result: {input switch
                     {
                         "+" => Calculator.Add(a, b),
                         "-" => Calculator.Subtract(a, b),
                         "*" => Calculator.Multiply(a, b),
                         "/" => Calculator.Divide(a, b),
-                        _ => throw new InvalidOperationException("Unknown operation.")
+                        _ => throw new ArgumentOutOfRangeException("Unknown operation.")
                     }}");
 
                     break; 
