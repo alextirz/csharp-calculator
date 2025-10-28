@@ -1,4 +1,4 @@
-﻿using System;
+﻿using CalculatorLib;
 
 namespace CalculatorApp
 {
@@ -16,14 +16,16 @@ namespace CalculatorApp
                 if (operation == "q")
                     return;
 
+                var calculator = new Calculator();
+
                 Console.WriteLine("Please enter first number:");
                 double a = ReadNumberInput();
 
                 Console.WriteLine("Please enter second number:");
                 double b = ReadNumberInput();
 
-                PerformOperation(a, b, operation);
-                Console.WriteLine($"(LastResult stored: {Calculator.LastResult})");
+                PerformOperation(calculator, a, b, operation);
+                Console.WriteLine($"(LastResult stored: {calculator.LastResult})");
             }
         }
 
@@ -33,7 +35,7 @@ namespace CalculatorApp
             {
                 var input = Console.ReadLine().Trim().ToLower();
 
-                if (input == "q" || input == "+" || input == "+" || input == "+" || input == "+")
+                if (input == "q" || input == "+" || input == "-" || input == "*" || input == "/")
                     return input;
 
                 Console.WriteLine("Error: Invalid input. Please enter a valid operation (+, -, *, /) or 'q' to quit.");
@@ -53,27 +55,30 @@ namespace CalculatorApp
             }
         }
 
-        private static void PerformOperation(double a, double b, string operation)
+        private static void PerformOperation(Calculator calculator, double a, double b, string operation)
         {
-            while (true)
+            try
             {
-                try
+                Console.WriteLine($"Result: {operation switch
                 {
-                    Console.WriteLine($"Result: {operation switch
-                    {
-                        "+" => Calculator.Add(a, b),
-                        "-" => Calculator.Subtract(a, b),
-                        "*" => Calculator.Multiply(a, b),
-                        "/" => Calculator.Divide(a, b),
-                        _ => throw new ArgumentOutOfRangeException("Unknown operation.")
-                    }}");
-
-                    break; 
-                }
-                catch
-                {
-                    Console.WriteLine("Error: Invalid operation.");
-                }
+                    "+" => calculator.Add(a, b),
+                    "-" => calculator.Subtract(a, b),
+                    "*" => calculator.Multiply(a, b),
+                    "/" => calculator.Divide(a, b),
+                    _ => throw new ArgumentOutOfRangeException("Unknown operation.")
+                }}");
+            }
+            catch (DivideByZeroException ex)
+            {
+                Console.WriteLine($"Error: Division by 0 is not allowed.");
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                Console.WriteLine($"Operation you are trying to perform is invalid.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"The result of the operation is invalid.");
             }
         }
 

@@ -1,13 +1,13 @@
 ﻿namespace CalculatorApp
 {
-    public static class Calculator
+    public class Calculator
     {
-        public static double LastResult { get; private set; }
-        public static double Add(double a, double b) => LastResult = a + b;
-        public static double Subtract(double a, double b) => LastResult = a - b;
-        public static double Multiply(double a, double b) => LastResult = a * b;
+        public double LastResult { get; private set; }
+        public double Add(double a, double b) => LastResult = a + b;
+        public double Subtract(double a, double b) => LastResult = a - b;
+        public double Multiply(double a, double b) => LastResult = a * b;
 
-        public static double Divide(double a, double b)
+        public double Divide(double a, double b)
         {
             if (b == 0)
             {
