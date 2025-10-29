@@ -11,19 +11,26 @@ namespace CalculatorApp
             Console.WriteLine("Super Calculator.");
             calculator = SelectCalculator();
             if (calculator == null) return; // user choice is to quit
+            double a = 0;
+            double b = 0;
 
             while (true)
             {
-                Console.WriteLine($"Choose operation. {calculator.ShowValidOperations()}");
-                var operation = SelectOperation();
+                Console.WriteLine($"Choose operation. {calculator.ShowValidOperations()}  or 'q' to quit.");
+                SelectOperation();
+
+                if (calculator.ActiveOperation is null) return; // user choice is to quit
 
                 Console.WriteLine("Please enter first number:");
-                double a = ReadNumberInput();
+                a = ReadNumberInput();
 
-                Console.WriteLine("Please enter second number:");
-                double b = ReadNumberInput();
-
-                calculator.PerformOperation(a, b, operation);
+                if (calculator.SecondInputRequired())
+                {
+                    Console.WriteLine("Please enter second number:");
+                    b = ReadNumberInput();
+                }
+                  
+                calculator.PerformOperation(a, b);
                 Console.WriteLine($"(LastResult stored: {calculator.LastResult})");
             }
         }
@@ -67,16 +74,26 @@ namespace CalculatorApp
             }
         }
 
-        private static string SelectOperation()
+        private static void SelectOperation()
         {
             while (true)
             {
                 var input = Console.ReadLine().Trim().ToLower();
 
-                if (calculator.ValidOperations.Contains(input))
-                    return input;
+                if (input == "q")
+                {
+                    calculator.ActiveOperation = null;
+                    Console.WriteLine("Quitting.");
+                    return;
+                }
 
-                Console.WriteLine("Error: Invalid input. Please enter a valid operation (+, -, *, /) or 'q' to quit.");
+                if (calculator.ValidOperations.Contains(input))
+                {
+                    calculator.ActiveOperation = input;
+                    return;
+                }
+
+                Console.WriteLine($"Error: Invalid input. Please enter a valid operation {calculator.ShowValidOperations()})  or 'q' to quit.");
             }
         }
 
@@ -92,7 +109,5 @@ namespace CalculatorApp
                 Console.WriteLine("Invalid number, try again:");
             }
         }
-
-
     }
 }

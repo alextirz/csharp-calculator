@@ -4,7 +4,7 @@ namespace CalculatorLib
 {
     public class ScientificCalculator : Calculator
     {
-        private readonly string[] SpecificOperations = { "Pow", "Sqrt", "Sin", "Cos" };
+        private readonly string[] SpecificOperations = { "pow", "sqrt", "sin", "cos" };
         public override string[] ValidOperations => base.ValidOperations.Concat(SpecificOperations).ToArray();
         public double Pow(double a, double b) => LastResult = Math.Pow(a, b);
 
@@ -43,18 +43,26 @@ namespace CalculatorLib
             return LastResult = a / b;
         }
 
-        public override void PerformOperation(double a, double b, string operation)
+        public override void PerformOperation(double a, double b)
         {
-            if (operation == "Pow")
+            if (ActiveOperation == "pow")
                 Pow(a, b);
-            else if (operation == "Sqrt")
+            else if (ActiveOperation == "sqrt")
                 Sqrt(a);
-            else if (operation == "Sin")
+            else if (ActiveOperation == "sin")
                 Sin(a);
-            else if (operation == "Cos")
+            else if (ActiveOperation == "cos")
                 Cos(a);
 
-            else base.PerformOperation(a, b, operation);
+            else base.PerformOperation(a, b);
+        }
+
+        public override bool SecondInputRequired()
+        {
+            if (ActiveOperation == "sqrt" || ActiveOperation == "sin" || ActiveOperation == "cos")
+                return false;
+
+           return base.SecondInputRequired();
         }
     }
 }

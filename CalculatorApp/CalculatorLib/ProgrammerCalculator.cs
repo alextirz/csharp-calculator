@@ -1,13 +1,12 @@
-﻿using CalculatorApp
+﻿using CalculatorApp;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CalculatorLib
 {
     public class ProgrammerCalculator : Calculator
     {
-        private readonly string[] SpecificOperations = { "bin", "hex", "&", "|", "^" };
+        private readonly string[] SpecificOperations = { "&", "|", "^" };
         public override string[] ValidOperations => base.ValidOperations.Concat(SpecificOperations).ToArray();
-        public string ToBinary(int number) => Convert.ToString(number, 2);
-        public string ToHex(int number) => Convert.ToString(number, 16).ToUpper();
 
         public int And(int a, int b)
         {
@@ -41,22 +40,26 @@ namespace CalculatorLib
             return LastResult = Math.Floor(a / b);
         }
 
-        public override void PerformOperation(double a, double b, string operation)
+        public override void PerformOperation(double a, double b)
         {
+            if (CheckIfInputsCanBeIntegers(a, b))
+                throw new ArgumentException("Programmer calculator supports only integers.");
+
             var firstNumberInt = Convert.ToInt32(a);
             var secondNumberInt = Convert.ToInt32(b);
-            if (operation == "bin")
-                ToBinary(firstNumberInt);
-            else if (operation == "hex")
-                ToHex(firstNumberInt);
-            else if (operation == "&")
+            if (ActiveOperation == "&")
                 And(firstNumberInt, secondNumberInt);
-            else if (operation == "|")
+            else if (ActiveOperation == "|")
                 Or(firstNumberInt, secondNumberInt);
-            else if (operation == "^")
+            else if (ActiveOperation == "^")
                 Xor(firstNumberInt, secondNumberInt);
 
-            else base.PerformOperation(a, b, operation);
+            else base.PerformOperation(a, b);
+        }
+
+        private bool CheckIfInputsCanBeIntegers(double a, double b)
+        {
+            return a % 1 != 0 && b % 1 != 0;
         }
     }
 }

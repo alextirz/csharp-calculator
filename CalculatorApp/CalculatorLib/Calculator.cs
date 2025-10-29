@@ -3,6 +3,7 @@
     public class Calculator
     {
         public virtual string[] ValidOperations { get; } = ["+", "-", "*", "/"];
+        public string? ActiveOperation { get; set; }
         public double LastResult { get; protected set; }
         public double Add(double a, double b) => LastResult = a + b;
         public double Subtract(double a, double b) => LastResult = a - b;
@@ -23,17 +24,17 @@
             return $"Available operations: {string.Join(", ", ValidOperations)}";
         }
 
-        public virtual void PerformOperation(double a, double b, string operation)
+        public virtual void PerformOperation(double a, double b)
         {
             try
             {
-                if (operation == "+")
+                if (ActiveOperation == "+")
                     Add(a, b);
-                else if (operation == "-")
+                else if (ActiveOperation == "-")
                     Subtract(a, b);
-                else if (operation == "*")
+                else if (ActiveOperation == "*")
                     Multiply(a, b);
-                else if (operation == "/")
+                else if (ActiveOperation == "/")
                     Divide(a, b);
 
                 else throw new ArgumentOutOfRangeException("Unknown operation.");
@@ -50,6 +51,11 @@
             {
                 Console.WriteLine($"The result of the operation is invalid.");
             }
+        }
+
+        public virtual bool SecondInputRequired()
+        {
+            return true;
         }
     }
 }
