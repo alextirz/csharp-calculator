@@ -7,6 +7,14 @@ Programmer Calculator	+, -, *, /, &, `
 
 #How to Run
 
+1. Open the project in Visual Studio or any C# IDE.
+2. Or run it from the terminal with the following commands from the folder where solution is located:
+
+dotnet build
+dotnet run --project ./CalculatorApp
+
+#Usage
+
 1. Choose the calculator type (1 = Basic, 2 = Scientific, 3 = Programmer).
 2. Pick an operation from the shown list.
 3. Enter number(s) when asked.
