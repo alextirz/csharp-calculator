@@ -5,7 +5,7 @@ namespace CalculatorLib
     public class ScientificCalculator : Calculator
     {
         private readonly string[] SpecificOperations = { "Pow", "Sqrt", "Sin", "Cos" };
-        protected override string[] ValidOperations => base.ValidOperations.Concat(SpecificOperations).ToArray();
+        public override string[] ValidOperations => base.ValidOperations.Concat(SpecificOperations).ToArray();
         public double Pow(double a, double b) => LastResult = Math.Pow(a, b);
 
         public double Sqrt(double a)
@@ -41,6 +41,20 @@ namespace CalculatorLib
                 throw new DivideByZeroException("Division by zero is not allowed in Scientific Calculator.");
 
             return LastResult = a / b;
+        }
+
+        public override void PerformOperation(double a, double b, string operation)
+        {
+            if (operation == "Pow")
+                Pow(a, b);
+            else if (operation == "Sqrt")
+                Sqrt(a);
+            else if (operation == "Sin")
+                Sin(a);
+            else if (operation == "Cos")
+                Cos(a);
+
+            else base.PerformOperation(a, b, operation);
         }
     }
 }

@@ -1,11 +1,11 @@
-﻿using CalculatorApp;
+﻿using CalculatorApp
 
 namespace CalculatorLib
 {
     public class ProgrammerCalculator : Calculator
     {
         private readonly string[] SpecificOperations = { "bin", "hex", "&", "|", "^" };
-        protected override string[] ValidOperations => base.ValidOperations.Concat(SpecificOperations).ToArray();
+        public override string[] ValidOperations => base.ValidOperations.Concat(SpecificOperations).ToArray();
         public string ToBinary(int number) => Convert.ToString(number, 2);
         public string ToHex(int number) => Convert.ToString(number, 16).ToUpper();
 
@@ -38,7 +38,25 @@ namespace CalculatorLib
                 throw new DivideByZeroException("Cannot divide by zero.");
             }
             Console.WriteLine("[Programmer] Integer division performed.");
-            return LastResult = Math.Floor(a / b); 
+            return LastResult = Math.Floor(a / b);
+        }
+
+        public override void PerformOperation(double a, double b, string operation)
+        {
+            var firstNumberInt = Convert.ToInt32(a);
+            var secondNumberInt = Convert.ToInt32(b);
+            if (operation == "bin")
+                ToBinary(firstNumberInt);
+            else if (operation == "hex")
+                ToHex(firstNumberInt);
+            else if (operation == "&")
+                And(firstNumberInt, secondNumberInt);
+            else if (operation == "|")
+                Or(firstNumberInt, secondNumberInt);
+            else if (operation == "^")
+                Xor(firstNumberInt, secondNumberInt);
+
+            else base.PerformOperation(a, b, operation);
         }
     }
 }
