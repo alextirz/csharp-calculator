@@ -3,7 +3,7 @@
     internal class Money
     {
         private int majorUnit;
-        private int minorUnit; 
+        private int minorUnit;
         public string Currency { get; private set; }
 
         public int WholePart
@@ -13,7 +13,7 @@
             {
                 if (value < 0) throw new ArgumentOutOfRangeException("Amount can not be negative");
                 majorUnit = value;
-           
+
             }
         }
         public int Cents

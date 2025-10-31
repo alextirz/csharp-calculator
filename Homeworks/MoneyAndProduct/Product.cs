@@ -33,5 +33,4 @@
             return HashCode.Combine(Name?.ToLowerInvariant(), Price);
         }
     }
-
 }

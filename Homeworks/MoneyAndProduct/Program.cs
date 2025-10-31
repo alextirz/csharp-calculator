@@ -1,5 +1,4 @@
-﻿
-namespace MoneyAndProduct
+﻿namespace MoneyAndProduct
 {
     internal class Program
     {
@@ -11,7 +10,7 @@ namespace MoneyAndProduct
             string name = ReadString("Enter product name: ");
             Money price = CreateMoney();
             string? description = ReadString("Enter description (optional, press Enter to skip): ", false);
-            
+
             Product product = new Product(name, price, description);
 
             while (true)
@@ -130,6 +129,5 @@ namespace MoneyAndProduct
                 }
             }
         }
-
     }
 }
